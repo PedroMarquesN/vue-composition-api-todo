@@ -1,6 +1,7 @@
 <script>
 import TodoService from '@/services/todo.services'
 import { onMounted, ref } from 'vue'
+import Todo from './Todo.vue'
 
 
 export default {
@@ -24,8 +25,11 @@ export default {
         todos,
         loading,
     }
-
- }
+    
+},
+components: {
+    Todo
+}
 }
 </script>
 
@@ -35,7 +39,7 @@ export default {
     <div v-if="loading">Carregando...</div>
     <ul>
         <li v-for="todo in todos" :key="todo.indentify">
-            {{ todo.title }}
+           <todo :todo="todo"></todo>
         </li>
     </ul>
 </template>
