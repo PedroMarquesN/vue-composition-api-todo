@@ -15,20 +15,27 @@ export default {
         loading.value = true
         TodoService.getAll()
                 .then(response =>{
-                    console.log(response)
                     todos.value = response.data.data
                 })
                 .catch(error => console.log(error))
                 .finally(()=> loading.value = false)
     })
+
+    const removeTodoList = (todo) => todos.value.splice(todos.value.indexOf(todo), 1)
+
+    const todoUpdated = (todo) => {
+        todos.value[todos.value.indexOf(todo)] = todo
+    }
     return {
         todos,
         loading,
+        removeTodoList,
+        todoUpdated
     }
     
 },
 components: {
-    Todo
+    Todo 
 }
 }
 </script>
@@ -39,7 +46,7 @@ components: {
     <div v-if="loading">Carregando...</div>
     <ul>
         <li v-for="todo in todos" :key="todo.indentify">
-           <todo :todo="todo"></todo>
+           <todo :todo="todo" @todoDeleted="removeTodoList" @todoUpdated="todoUpdated" />
         </li>
     </ul>
 </template>
